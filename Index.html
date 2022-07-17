@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+<body>
+    <div class="container">
+        <div id="count-container">
+            0:0:0
+        </div>
+        <div>
+            <button onclick="Start()" id="start"> Start </button>
+            <button onclick="Stop()" id="stop"> Stop </button>
+            <button onclick="Resume()" id="resume"> Resume </button>
+            <button onclick="Clear()" id="clear"> Clear </button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var hr = 0;
+        var min = 0;
+        var sec = 0;
+        var watch = "";
+        function Start(){
+            watch = setInterval(update,1000);
+        }
+        function update(){
+            sec = sec + 1;
+            if(sec>59){
+                min = min + 1;
+                sec = 0;
+                if(min>59){
+                    hr = hr + 1;
+                    min = 0;
+                    sec = 0;
+                    if(hr>11){
+                        hr = 0;
+                        min = 0;
+                        sec = 0;
+                    } 
+                }
+            }
+            document.getElementById("count-container").innerHTML = hr+":"+min+":"+sec;
+            document.getElementById("stop").onclick=()=>{Stop();};
+            document.getElementById("clear").onclick=()=>{Clear();};
+            document.getElementById("resume").onclick=()=>{Resume();};
+
+            function Stop(){
+                clearInterval(watch);
+            }
+
+            function Resume(){
+                watch = setInterval(update,1000);
+            }
+
+            function Clear(){
+                hr = 0;
+                min = 0;
+                sec = 0;
+                clearInterval(watch);
+                document.getElementById("count-container").innerHTML = hr+":"+min+":"+sec;
+            }
+        }    
+    </script>
+</body>
+</html>
